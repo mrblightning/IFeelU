@@ -23,24 +23,26 @@
 //this code lets us access mongodb as a Client
 const mongoClient = require('mongodb').MongoClient;
 //this determins which DB we'll be accessing or creating
-var url = 'mongodb://localhost:27017/';
+//let url = 'mongodb://localhost:27017/';
+//this is the URL for the nodechef server I created
+let url = "mongodb://ifeelusers-6133:HQJbSCVKH1mDIm65jVFLehl3XXIUjU@db-ifeelusers-6133.nodechef.com:5409/ifeelusers";
 
 //this command connects to the client we created, specifically to the DB IFeelUsers
 //and inserts object myUsers into the collection users using the command insertOne.	
-  // mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
-  //   if (err) { throw err };
-  //   var dbo = db.db("IFeelUsers");
-  //   var myUsers = 
-  //     {_id: '5c6459230611ee0d144ac78b', FirstName: 'Ilana', LastName: 'Bareket', mail: 'im@gmail.com', password: '123456', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS',
-  //       treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga', TrackingGeneralFeeling: true, TrackingNausea: false, TrackingMotivation: false,
-  //       TrackingDizziness: false, TrackingAppetite: false, TrackingBowelMovements: false, TrackingPain: true, TrackingExhaustion: false,
-  //       TrackingTime_1: '10:00', TrackingTime_2: '19:00'};
-  //     dbo.collection("users").insertOne(myUsers, function(err, res) {
-  //       if (err) throw err;
-  //       console.log("1 document added: " + res.insertedCount);
-  //       db.close();
-  //     });
-  // });
+  mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
+    if (err) { throw err };
+    var dbo = db.db("ifeelusers");
+    var myUsers = 
+      {_id: '5c6459230611ee0d144ac78b', FirstName: 'Ilana', LastName: 'Bareket', mail: 'im@gmail.com', password: '123456', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS',
+        treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga', TrackingGeneralFeeling: true, TrackingNausea: false, TrackingMotivation: false,
+        TrackingDizziness: false, TrackingAppetite: false, TrackingBowelMovements: false, TrackingPain: true, TrackingExhaustion: false,
+        TrackingTime_1: '10:00', TrackingTime_2: '19:00'};
+      dbo.collection("users").insertOne(myUsers, function(err, res) {
+        if (err) throw err;
+        console.log("1 document added: " + res.insertedCount);
+        db.close();
+      });
+  });
 
 //this command connects to the client we created, specifically to the DB IFeelUsers
 //and deletes ALL documents (since the first parameter, quary, is blank then there are no filters 
@@ -76,7 +78,7 @@ var url = 'mongodb://localhost:27017/';
 //and inserts object mydishes into the collection dishes using the command insertMany.	
   mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
     if (err) { throw err };
-    var dbo = db.db("IFeelUsers");
+    var dbo = db.db("ifeelusers");
     var myRecords = [
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-01', time: '10:00', RecordTracking: 'GeneralFeeling',
         state: 4, ExtraText: 'I\'m feeling great today. Excited to see what this app can do.'},

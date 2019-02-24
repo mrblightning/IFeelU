@@ -34,7 +34,9 @@ class Graph extends React.Component {
             return Math.round(difference_ms/ONEDAY);
         }
         const node = this.node;
-        await fetch('http://localhost:4000/fetch/Ilana').then(response => {
+        //await fetch('http://localhost:4000/fetch/5c6459230611ee0d144ac78b').then(response => {
+        await fetch('fetch/5c6459230611ee0d144ac78b').then(response => {
+            console.dir(response)
             return response.json();
         }).then(data => {
             //console.log(data);
