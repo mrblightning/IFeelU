@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import './index.css';
 
 /*Toggle is the Toggle select element */
@@ -12,9 +12,9 @@ import Graph from './graph';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 class Navbar extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
         let cName;

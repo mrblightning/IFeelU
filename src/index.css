@@ -46,9 +46,10 @@ html, body {
 }
 
 .graphContent{
+  /*
   width:300px;
   max-width: 300px;
-  /*
+  
   height:800px;
   */
 }

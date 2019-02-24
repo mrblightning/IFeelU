@@ -23,9 +23,9 @@ class PageWrap extends React.Component {
     }
 
     render() {
-        let cName;
-        if (this.state.isToggleOn) { cName = "sidebarMenuShadow" }
-        else { cName = "" }
+        // let cName;
+        // if (this.state.isToggleOn) { cName = "sidebarMenuShadow" }
+        // else { cName = "" }
 
         return (
             <div>

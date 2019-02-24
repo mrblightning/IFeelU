@@ -1,7 +1,7 @@
 import React from 'react';
 /*To enable Pan and Zoom that are defined in chartjs-plugin-zoom*/
 import * as zoom from 'chartjs-plugin-zoom';
-import { finished } from 'stream';
+// import { finished } from 'stream';
 
 var Chart = require("chart.js");
 
@@ -15,12 +15,7 @@ class Graph extends React.Component {
         this.setState({ extraText: adedText + array[index]});
     }
 
-    componentDidMount() {
-        //function to convert string in the format of dd/mm/yyyy into a valid date object
-        function slashToDate(dateStr) {
-            var parts = dateStr.split("/")
-            return new Date(parts[2], parts[1] - 1, parts[0])
-        }
+    async componentDidMount() {
         //function to convert string in the format of yyyy-mm-dd into a valid date object
         function toDate(dateStr) {
             return new Date(dateStr)
@@ -39,7 +34,7 @@ class Graph extends React.Component {
             return Math.round(difference_ms/ONEDAY);
         }
         const node = this.node;
-        fetch('http://localhost:4000/fetch/Ilana').then(response => {
+        await fetch('http://localhost:4000/fetch/Ilana').then(response => {
             return response.json();
         }).then(data => {
             //console.log(data);
@@ -126,7 +121,9 @@ class Graph extends React.Component {
             //this.setState(data)
         })
 
-        var myChart = new Chart(node, {
+        console.log(this.state.myLabels.length);
+
+        let myChart = new Chart(node, {
             type: "line",
             data: {
                 labels: this.state.myLabels,
@@ -179,6 +176,7 @@ class Graph extends React.Component {
                 //     display: true,
                 //     text: 'Symptoms Over Time'
                 //   },
+                legend: {position:"top", labels:{boxWidth: 10}},
                 'onClick' : (evt, item) => { 
                     var thisPoint = myChart.getElementAtEvent(evt)[0];
                     //var day = item[0]['_model'].label this.selectedDay = day this.renderHourlyBarChart();
@@ -219,6 +217,12 @@ class Graph extends React.Component {
                             max: 5,
                             min: 1,
                             stepSize: 1 
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            minRotation: 0,
+                            maxRotation: 0 
                         }
                     }]
                 },

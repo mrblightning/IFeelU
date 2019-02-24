@@ -8,7 +8,7 @@
 //In order to have mongodb running you need to have it downloaded, installed and have a path for creating databases - 
 //The default location is c:\data\db but you can change that to whatever you want
 //Assuming you did it all as required and you installed MongoDB version 4.0 then use Command Prompt
-//to CD to C:\Program Files\MongoDB\Server\4.0\bin>
+//to CD to C:\Program Files\MongoDB\Server\4.0\bin
 //enter command 'mongod'
 //If all went well you should see a bunch of text and the last line should say something like:
 //Waiting for connections on port 27017
