@@ -27,7 +27,7 @@ class Navbar extends React.Component {
                     <div className="header">
                         <div className="headerText">IFEELU</div>
                         <div className="logo">
-                            <a href="https://www.youtube.com/">
+                            <a href="https://ifeelu-6133.nodechef.com/">
                                 <img src="https://drive.google.com/uc?id=14MW9Z9pz9of-krcV5qLRLs_gvjmE1Sny" alt="IFeelU Logo" />
                             </a>
                         </div>

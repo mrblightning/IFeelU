@@ -69,7 +69,7 @@ app.get('/fetch/:id', (req, res) => {
 		var dbObject = db.db("ifeelusers");
 		dbObject.collection("records").find({UserId: newId}).toArray(function(err, result) {
 			if (err) { throw err };
-			console.log(result);
+			//console.log(result);
 			res.send(result);
 			db.close();
 		});

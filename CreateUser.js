@@ -29,20 +29,20 @@ let url = "mongodb://ifeelusers-6133:HQJbSCVKH1mDIm65jVFLehl3XXIUjU@db-ifeeluser
 
 //this command connects to the client we created, specifically to the DB IFeelUsers
 //and inserts object myUsers into the collection users using the command insertOne.	
-  mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
-    if (err) { throw err };
-    var dbo = db.db("ifeelusers");
-    var myUsers = 
-      {_id: '5c6459230611ee0d144ac78b', FirstName: 'Ilana', LastName: 'Bareket', mail: 'im@gmail.com', password: '123456', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS',
-        treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga', TrackingGeneralFeeling: true, TrackingNausea: false, TrackingMotivation: false,
-        TrackingDizziness: false, TrackingAppetite: false, TrackingBowelMovements: false, TrackingPain: true, TrackingExhaustion: false,
-        TrackingTime_1: '10:00', TrackingTime_2: '19:00'};
-      dbo.collection("users").insertOne(myUsers, function(err, res) {
-        if (err) throw err;
-        console.log("1 document added: " + res.insertedCount);
-        db.close();
-      });
-  });
+  // mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
+  //   if (err) { throw err };
+  //   var dbo = db.db("ifeelusers");
+  //   var myUsers = 
+  //     {_id: '5c6459230611ee0d144ac78b', FirstName: 'Ilana', LastName: 'Bareket', mail: 'im@gmail.com', password: '123456', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS',
+  //       treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga', TrackingGeneralFeeling: true, TrackingNausea: false, TrackingMotivation: false,
+  //       TrackingDizziness: false, TrackingAppetite: false, TrackingBowelMovements: false, TrackingPain: true, TrackingExhaustion: false,
+  //       TrackingTime_1: '10:00', TrackingTime_2: '19:00'};
+  //     dbo.collection("users").insertOne(myUsers, function(err, res) {
+  //       if (err) throw err;
+  //       console.log("1 document added: " + res.insertedCount);
+  //       db.close();
+  //     });
+  // });
 
 //this command connects to the client we created, specifically to the DB IFeelUsers
 //and deletes ALL documents (since the first parameter, quary, is blank then there are no filters 
@@ -81,41 +81,48 @@ let url = "mongodb://ifeelusers-6133:HQJbSCVKH1mDIm65jVFLehl3XXIUjU@db-ifeeluser
     var dbo = db.db("ifeelusers");
     var myRecords = [
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-01', time: '10:00', RecordTracking: 'GeneralFeeling',
-        state: 4, ExtraText: 'I\'m feeling great today. Excited to see what this app can do.'},
+        state: 4, ExtraText: 'I\'m feeling great today. Excited to see what this app can do.',
+        conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-01', time: '10:00', RecordTracking: 'Pain',
-        state: 3, ExtraText: 'Hi new app :)'},
+        state: 3, ExtraText: 'Hi new app :)',
+        conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-01', time: '19:00', RecordTracking: 'GeneralFeeling',
-        state: 3, ExtraText: 'Really tired this evening.'},
+        state: 3, ExtraText: 'Really tired this evening.',
+        conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-01', time: '19:00', RecordTracking: 'Pain',
-        state: 4, ExtraText: 'It\'s going to rain tomorrow. My right knee is killing me'},
+        state: 4, ExtraText: 'It\'s going to rain tomorrow. My right knee is killing me',
+        conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-02', time: '10:00', RecordTracking: 'GeneralFeeling',
-        state: 3, ExtraText:''},
+        state: 3, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-02', time: '10:00', RecordTracking: 'Pain',
-        state: 2, ExtraText:''},
+        state: 2, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-02', time: '19:00', RecordTracking: 'GeneralFeeling',
-        state: 5, ExtraText:''},
+        state: 5, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-02', time: '19:00', RecordTracking: 'Pain',
-        state: 1, ExtraText:''},
+        state: 1, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-03', time: '10:00', RecordTracking: 'GeneralFeeling',
-        state: 3, ExtraText:''},
+        state: 3, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-03', time: '10:00', RecordTracking: 'Pain',
-        state: 2, ExtraText:''},
+        state: 2, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-03', time: '19:00', RecordTracking: 'GeneralFeeling',
-        state: 5, ExtraText:''},
+        state: 5, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-03', time: '19:00', RecordTracking: 'Pain',
-        state: 1, ExtraText:''},
+        state: 1, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS', treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-05', time: '10:00', RecordTracking: 'GeneralFeeling',
-        state: 4, ExtraText: 'I\'m feeling great today. Excited to see what this app can do.'},
+        state: 4, ExtraText: 'I\'m feeling great today. Excited to see what this app can do.',
+        conditions: 'Fibromyalgia, Complex PTSD', treatments: 'CBD, Hydro Therapy'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-05', time: '10:00', RecordTracking: 'Pain',
-        state: 3, ExtraText: 'Hi new app :)'},
+        state: 3, ExtraText: 'Hi new app :)', conditions: 'Fibromyalgia, Complex PTSD', treatments: 'CBD, Hydro Therapy'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-10', time: '19:00', RecordTracking: 'GeneralFeeling',
-        state: 3, ExtraText: 'Really tired this evening.'},
+        state: 3, ExtraText: 'Really tired this evening.',
+        conditions: 'Fibromyalgia, Complex PTSD', treatments: 'CBD, Hydro Therapy'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-10', time: '19:00', RecordTracking: 'Pain',
-        state: 4, ExtraText: 'It\'s going to rain tomorrow. My right knee is killing me'},
+        state: 4, ExtraText: 'It\'s going to rain tomorrow. My right knee is killing me',
+        conditions: 'Fibromyalgia, Complex PTSD', treatments: 'CBD, Hydro Therapy'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "1", date: '2019-01-11', time: '10:00', RecordTracking: 'GeneralFeeling',
-        state: 3, ExtraText:''},
+        state: 3, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD', treatments: 'Weed'},
       {FirstName: 'Ilana', LastName: 'Bareket', UserId: '5c6459230611ee0d144ac78b', check: "2", date: '2019-01-12', time: '19:00', RecordTracking: 'Pain',
-        state: 1, ExtraText:''},
+        state: 1, ExtraText:'', conditions: 'Fibromyalgia, Complex PTSD', treatments: 'Weed'}
     ];
     dbo.collection("records").insertMany(myRecords, function (err, res) {
       if (err) throw err;
