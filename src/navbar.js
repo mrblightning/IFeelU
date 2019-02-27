@@ -50,7 +50,8 @@ class Navbar extends React.Component {
                             <li onClick={this.props.toggleState}>
                                 <Link to={`/graph`}>Graph</Link></li>
                             <li onClick={this.props.toggleState}>
-                                <Link to={`/pages/Instagram`}>Instagram</Link></li>
+                               {/* <Route path='/login/:id' exact={true} component={login} /> */}
+                                <Link to={`/login`}>Login</Link></li>
                             <li onClick={this.props.toggleState}>
                                 <Link to={`/pages/Twitter`}>Twitter</Link></li>
                             <li onClick={this.props.toggleState}>
