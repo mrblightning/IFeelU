@@ -101,8 +101,8 @@ class Graph extends React.Component {
 
 		//function to fetch the information about the user from the DB
 		async function fetchUserData(userId){
-            let URL = "http://localhost:4000/fetch/" + userId;
-			//let URL = "fetch/" + userId;
+            //let URL = "http://localhost:4000/fetch/" + userId;
+			let URL = "fetch/" + userId;
             await fetch(URL).then(response => {
             return response.json();
 			}).then(data => {
