@@ -8,7 +8,10 @@ var Chart = require("chart.js");
 class Graph extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {extraText:''};
+		this.state = {extraText:''};
+		
+		//this binding is needed to make 'this' work in the callback 
+		this.renderExtraText = this.renderExtraText.bind(this);
     }
     
     //this will redraw the page WITH the added text at the bottom
@@ -101,8 +104,8 @@ class Graph extends React.Component {
 
 		//function to fetch the information about the user from the DB
 		async function fetchUserData(userId){
-            //let URL = "http://localhost:4000/fetch/" + userId;
-			let URL = "fetch/" + userId;
+            let URL = "http://localhost:4000/fetch/" + userId;
+			//let URL = "fetch/" + userId;
             await fetch(URL).then(response => {
             return response.json();
 			}).then(data => {
@@ -309,6 +312,12 @@ class Graph extends React.Component {
 			//currently defined
 			let datasetsData = [];
 			let datasetsText = "";
+
+			console.log(myLabels);
+			console.log(myDataGeneralFeeling);
+			console.log(myDataPain);
+			console.log(PainTexts);
+
 			if (GeneralFeelingToggle){
                 datasetsText = {label: 'General Feeling', data: myDataGeneralFeeling, backgroundColor: ['#3e95cd'], 
                                 borderColor: '#3e95cd', borderWidth: 7, fill: false, pointRadius: 7, pointHoverRadius: 7,
