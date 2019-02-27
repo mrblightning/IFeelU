@@ -30,32 +30,36 @@ app.use(bodyParser.urlencoded(
 ));
 app.use(bodyParser.json());
 
-//GET call from client to server
+//POST call from client to server
 //We connect to the client we defined for mongo, spesifically to IFeelUsers
-//then we call ALL information there for users with _id = :id and place it in 'result'
+//then we call FIRST information there for records with username = req.body.username
+//and password = req.body.password. We place the information we find into 'result'
 //then we use the response (res) to send the result just like we did with a locally defined object 
-app.get('/get/:id', (req, res) => {
-	let newId = req.params.id;
-	console.log(newId);
-	mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
+app.post('/fetch', (req, res) => {
+    var username1 = req.body.username;
+    var password1 = req.body.password;
+    console.log("/fetch");
+
+    mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
 		if (err) { throw err };
 		var dbObject = db.db("ifeelusers");
-		var myquery = {};
-		//this code allows me to make the field I'm looking for and it's value as variables
-		//for some unknown reason I cannot get the value of newId to be taken into myquery without eval
-		//The eval() function evaluates or executes an argument.
-		//If the argument is an expression, eval() evaluates the expression. If the argument is one or more JavaScript statements, 
-		//eval() executes the statements. 
-		var searchFieldName = "FirstName";
-		myquery[searchFieldName] = eval(newId);
-		dbObject.collection("users").findOne(myquery, function(err, result) {
-			if (err) {throw err};
-			res.send(result);
-		db.close();
-		});
-	});
-});
 
+        var myquery = {};
+        var searchFieldName1 = "userName";
+        var searchFieldName2 = "passWord";
+        myquery[searchFieldName1] = username1;
+        myquery[searchFieldName2] = password1;
+        console.log(username1);
+        console.log(password1);
+        console.log("myquery: " + myquery);
+        dbObject.collection("users").findOne(myquery, function (err, result) {
+            if (err) { throw err };
+            if (result != null) {
+                res.send(result);
+            }
+        });
+    });
+});
 
 //GET call from client to server
 //We connect to the client we defined for mongo, spesifically to IFeelUsers
