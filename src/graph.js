@@ -312,12 +312,6 @@ class Graph extends React.Component {
 			//currently defined
 			let datasetsData = [];
 			let datasetsText = "";
-
-			console.log(myLabels);
-			console.log(myDataGeneralFeeling);
-			console.log(myDataPain);
-			console.log(PainTexts);
-
 			if (GeneralFeelingToggle){
                 datasetsText = {label: 'General Feeling', data: myDataGeneralFeeling, backgroundColor: ['#3e95cd'], 
                                 borderColor: '#3e95cd', borderWidth: 7, fill: false, pointRadius: 7, pointHoverRadius: 7,
