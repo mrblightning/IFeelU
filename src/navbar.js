@@ -6,6 +6,8 @@ import './index.css';
 import Toggle from './toggle';
 /*Page is where I define the different pages */
 import Page from './Page';
+/*login is where the user initially logs in */
+import login from './login';
 /*Graph is where I define the graph class */
 import Graph from './graph';
 /*BrowserRouter and so on are elements of react-router-dom to enable Routing  */
@@ -63,8 +65,10 @@ class Navbar extends React.Component {
                     <div className='wrapper'>
                         {/*<Route> changes the content of this div (wrapper) based onb the URL*/}
                         <Route exact={true} path='/' component={Home} />
+                        <Route exact={true} path='/login' component={login} />
                         <Route path='/pages/:id' component={Page} />
-                        <Route exact={true} path='/:id' component={Graph} />
+                        <Route exact={true} path='/graph' component={Graph} />  
+                        <Route exact={true} path='/graph/:id' component={Graph} /> 
                     </div>
                 </div>
             </Router>

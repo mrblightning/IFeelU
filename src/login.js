@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import { isModuleDeclaration } from 'babel-types';
-import parentsData2 from './parentsData2'
+// import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+// import { isModuleDeclaration } from 'babel-types';
+// import parentsData2 from './parentsData2'
 import { Redirect } from 'react-router-dom'
-import Navbar from './navbar'
+// import Navbar from './navbar'
 
 
 class Login extends React.Component {
@@ -21,7 +21,7 @@ class Login extends React.Component {
     renderRedirect() {
         console.log("renderRedirect");
         if (this.state.redirect) {
-            return <Redirect method="post" to={"/parentsData2/" + this.state.username}></Redirect>
+            return <Redirect method="post" to={"/pages/found" + this.state.username}></Redirect>
         } else {
             return (
                <a href="#"><div className="loginSubmit" onClick={this.loginHandler} >login</div></a>
@@ -36,10 +36,11 @@ class Login extends React.Component {
         })
     }
 
-    loginHandler() {
+
+    async loginHandler(){
         console.log("loginHandler");
         console.log(this.state.username)
-        fetch('http://localhost:4000/fetch', {
+        await fetch('http://localhost:4000/fetch', {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -49,19 +50,18 @@ class Login extends React.Component {
                 username: this.state.username,
                 password: this.state.password
             })
-        }).then((response) => {
-            console.log(response)
-            return response.json()
-        }).then((data) => {
-            if (data != undefined) {
-                this.setRedirect();
-                console.log(data)
-            }
-            return data;
-        }).catch(Error => {
+        }).then(response => {
+            console.log(response);
+            return response.json();
+            }).then((data) => {
+                if (data != undefined) {
+                    this.setRedirect();
+                    console.log(data);
+                }
+                return data;
+            }).catch(Error => {
             console.log("Error whis username or password: " + Error)
         })
-
     }
 
     handleChangeUsername(event) {
@@ -79,33 +79,30 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
-            <Navbar/>
-            <div className="loginWrapper">
-                <div className="loginSecWrapper">
-                    <div className="loginTitel">Welcome</div>
-                    <div className="loginImg"></div>
-                    <div className="inputsWrapper">
-                        <div className="imputWrapper"><input type="text" className="loginInput" onChange={this.handleChangeUsername} value={this.state.username} onClick={this.handleClickUsername}></input></div>
-                        <div className="imputWrapper"><input type="password" className="loginInput" onChange={this.handleChangePassword} ></input></div>
-                    </div>
-                    {this.renderRedirect()}
-                </div >
-            </div >
+            <div className="pageContent" id="pageContent">
+                <div className="loginWrapper">
+                    <div className="loginSecWrapper">
+                        <div className="loginTitel">Welcome</div>
+                        <div className="loginImg"></div>
+                        <div className="inputsWrapper">
+                            <div className="imputWrapper"><input type="text" className="loginInput" onChange={this.handleChangeUsername} value={this.state.username} onClick={this.handleClickUsername}></input></div>
+                            <div className="imputWrapper"><input type="password" className="loginInput" onChange={this.handleChangePassword} ></input></div>
+                        </div>
+                        {this.renderRedirect()}
+                    </div >
+                </div > 
             </div>
         )
     }
 }
 
 
-
-
-
 const login = ({ match }) => {
 
     return (
         <div>
-            <Login />
+            {console.log("inside login")}
+            <Login/>
         </div>
     )
 }

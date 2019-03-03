@@ -46,7 +46,7 @@ app.post('/fetch', (req, res) => {
 
         var myquery = {};
         var searchFieldName1 = "userName";
-        var searchFieldName2 = "passWord";
+        var searchFieldName2 = "password";
         myquery[searchFieldName1] = username1;
         myquery[searchFieldName2] = password1;
         console.log(username1);
