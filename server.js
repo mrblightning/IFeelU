@@ -38,6 +38,7 @@ app.use(bodyParser.json());
 app.post('/fetch', (req, res) => {
     var username1 = req.body.username;
     var password1 = req.body.password;
+    var UserId1 = req.body.UserId;
     console.log("/fetch");
 
     mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
@@ -45,19 +46,38 @@ app.post('/fetch', (req, res) => {
 		var dbObject = db.db("ifeelusers");
 
         var myquery = {};
-        var searchFieldName1 = "userName";
-        var searchFieldName2 = "password";
-        myquery[searchFieldName1] = username1;
-        myquery[searchFieldName2] = password1;
-        console.log(username1);
-        console.log(password1);
-        console.log("myquery: " + myquery);
-        dbObject.collection("users").findOne(myquery, function (err, result) {
-            if (err) { throw err };
-            if (result != null) {
-                res.send(result);
-            }
-        });
+        //there are 2 options to locate a user.
+        //1. using the userName and password from the login page
+        if(username1 !== undefined && password1 !== undefined){
+            var searchFieldName1 = "userName";
+            var searchFieldName2 = "password";
+            myquery[searchFieldName1] = username1;
+            myquery[searchFieldName2] = password1;
+            console.log(username1);
+            console.log(password1);
+            console.log("myquery login: " + myquery);
+            dbObject.collection("users").findOne(myquery, function (err, result) {
+                if (err) { throw err };
+                if (result != null) {
+                    res.send(result);
+                }
+            });    
+        } 
+        //2. using the _id from the sessionStorage. this search comes from MyCotext.js
+        else {
+            if(UserId1 !== undefined){
+                var ObjectID = require('mongodb').ObjectID;
+                console.log("myquery session: " + ObjectID(UserId1));
+                //dbObject.collection("users").findOne({"_id" : ObjectID(UserId1)}, function (err, result) {
+                    dbObject.collection("users").findOne({"_id" : ObjectID("5c6459230611ee0d144ac78b")}, function (err, result) {
+                    if (err) { throw err };
+                    if (result != null) {
+                        console.log(result);
+                        res.send(result);
+                    }                
+                });
+            }        
+        }
     });
 });
 

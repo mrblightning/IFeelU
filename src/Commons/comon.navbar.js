@@ -1,15 +1,15 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
-import './index.css';
+import '../index.css';
 
 /*Toggle is the Toggle select element */
-import Toggle from './toggle';
+import Toggle from './comon.toggle';
 /*Page is where I define the different pages */
-import Page from './Page';
+import Page from '../Pages/page.Page';
 /*login is where the user initially logs in */
-import login from './login';
+import login from '../Pages/page.login';
 /*Graph is where I define the graph class */
-import Graph from './graph';
+import Graph from '../Pages/page.graph';
 /*BrowserRouter and so on are elements of react-router-dom to enable Routing  */
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 

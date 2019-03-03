@@ -7,7 +7,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 /*Navbar is the navbar for all pages */
-import Navbar from './navbar';
+import Navbar from './Commons/comon.navbar';
 
 /*PageWrap is the class encomassing all the pages wrapped in <Router>. 
 The Nav bar is always ther and under it are the various pages represented by
