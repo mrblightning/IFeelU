@@ -33,7 +33,7 @@ let url = "mongodb://ifeelusers-6133:HQJbSCVKH1mDIm65jVFLehl3XXIUjU@db-ifeeluser
     if (err) { throw err };
     var dbo = db.db("ifeelusers");
     var myUsers = 
-      {_id: '5c6459230611ee0d144ac78b', FirstName: 'Ilana', LastName: 'Bareket', userName: 'IlanaB', mail: 'im@gmail.com', password: '123456', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS',
+      {_id: '5c6459230611ee0d144ac78b', UserId: '5c6459230611ee0d144ac78b', FirstName: 'Ilana', LastName: 'Bareket', userName: 'IlanaB', mail: 'im@gmail.com', password: '123456', conditions: 'Fibromyalgia, Complex PTSD, IBS, DSPS',
         treatments: 'Diazepam, Weed, CBD, Hydro Therapy, Yoga', TrackingGeneralFeeling: true, TrackingNausea: false, TrackingMotivation: false,
         TrackingDizziness: false, TrackingAppetite: false, TrackingBowelMovements: false, TrackingPain: true, TrackingExhaustion: false,
         TrackingTime_1: '10:00', TrackingTime_2: '19:00'};

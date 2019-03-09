@@ -1,5 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom'
+/*Graph is where I define the graph class */
+import Graph from '../Pages/page.graph';
+/*BrowserRouter and so on are elements of react-router-dom to enable Routing  */
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 // first we will make a new context
 export const MyContext = React.createContext();
@@ -74,16 +78,15 @@ export class MyProvider extends React.Component {
                     //user found - go to path of existing user
                     console.log("redirect to : /pages/found_" + data.userName);
                     return (
-                        <Redirect method="post" to={"/pages/found_" + data.userName}></Redirect>
+                        <Router>
+                            <Redirect method="post" to={"/graph"}></Redirect>
+                            <Route exact={true} path='/graph' component={Graph} />
+                        </Router>
                     )
                 }
             }).catch(Error => {
             console.log("Error whith _ID from session: " + Error)
         })
-    }
-
-    meep(){
-        console.log("meep");
     }
 
     //this function is for getting user data from server for an new login user in login.js
@@ -130,9 +133,15 @@ export class MyProvider extends React.Component {
                     //connected login user - write to sessionStorage
                     window.sessionStorage.setItem('id', JSON.stringify(data._id));
                     //user found - go to path of login user
-                    return (
-                        <Redirect method="post" to={"/pages/found_" + data.userName}></Redirect>
-                    )
+                    return <Redirect method="post" to={"/pages/found_" + data.userName}></Redirect>
+                    // return (
+                    //     //console.log("this is from the context page")
+                    //     <Redirect method="post" to={"/graph"}></Redirect>
+                    //     // <Router>
+                    //     //     <Redirect method="post" to={"/graph"}></Redirect>
+                    //     //     <Route exact={true} path='/graph' component={Graph} />
+                    //     // </Router>
+                    // )
                 }
             }).catch(Error => {
             console.log("Error whith user + pass from login: " + Error)

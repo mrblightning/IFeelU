@@ -15,21 +15,17 @@ The Nav bar is always ther and under it are the various pages represented by
 class PageWrap extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { isToggleOn: false };
+        this.state = { isMenuOpen: false };
     }
 
-    toggleState = () => {
-        this.setState({ isToggleOn: !this.state.isToggleOn });
+    menuState = () => {
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
     }
 
     render() {
-        // let cName;
-        // if (this.state.isToggleOn) { cName = "sidebarMenuShadow" }
-        // else { cName = "" }
-
         return (
             <div>
-                <Navbar toggleState={this.toggleState} isToggleOn={this.state.isToggleOn}/>
+                <Navbar menuState={this.menuState} isMenuOpen={this.state.isMenuOpen}/>
             </div>
         );
     }

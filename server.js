@@ -36,55 +36,46 @@ app.use(bodyParser.json());
 //and password = req.body.password. We place the information we find into 'result'
 //then we use the response (res) to send the result just like we did with a locally defined object 
 app.post('/fetch', (req, res) => {
-    var username1 = req.body.username;
-    var password1 = req.body.password;
-    var UserId1 = req.body.UserId;
+    let username1 = req.body.username;
+    let password1 = req.body.password;
+    let UserId1 = req.body.UserId;
     console.log("/fetch");
 
     mongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
 		if (err) { throw err };
-		var dbObject = db.db("ifeelusers");
+		let dbObject = db.db("ifeelusers");
 
-        var myquery = {};
+        let myquery = {};
         //there are 2 options to locate a user.
         //1. using the userName and password from the login page
         if(username1 !== undefined && password1 !== undefined){
-            var searchFieldName1 = "userName";
-            var searchFieldName2 = "password";
+            let searchFieldName1 = "userName";
+            let searchFieldName2 = "password";
             myquery[searchFieldName1] = username1;
             myquery[searchFieldName2] = password1;
-            console.log(username1);
-            console.log(password1);
-            console.log("myquery login: " + myquery);
-            dbObject.collection("users").findOne(myquery, function (err, result) {
-                if (err) { throw err };
-                if (result != null) {
-                    res.send(result);
-                }
-            });    
         } 
-        //2. using the _id from the sessionStorage. this search comes from MyCotext.js
+        //2. using the _id / UserId from the sessionStorage. this search comes from MyCotext.js
         else {
             if(UserId1 !== undefined){
-                var ObjectID = require('mongodb').ObjectID;
-                console.log("myquery session: " + ObjectID(UserId1));
-                //dbObject.collection("users").findOne({"_id" : ObjectID(UserId1)}, function (err, result) {
-                    dbObject.collection("users").findOne({"_id" : ObjectID("5c6459230611ee0d144ac78b")}, function (err, result) {
-                    if (err) { throw err };
-                    if (result != null) {
-                        console.log(result);
-                        res.send(result);
-                    }                
-                });
+                let searchFieldName1 = "UserId";
+                myquery[searchFieldName1] = UserId1;
             }        
         }
+        dbObject.collection("users").findOne(myquery, function (err, result) {
+            if (err) { throw err };
+            if (result != null) {
+                console.log(result);
+                res.send(result);
+            }                
+        });
     });
 });
 
 //GET call from client to server
 //We connect to the client we defined for mongo, spesifically to IFeelUsers
-//then we call ALL information there for records with _id = :id and place it in 'result'
-//then we use the response (res) to send the result just like we did with a locally defined object 
+//then we call ALL information there for records with UserId = :id and place it in 'result'
+//then we use the response (res) to send the results back to the client
+//Not that this function is for the RECORDS while the one above is for the USER 
 app.get('/fetch/:id', (req, res) => {
 	let newId = req.params.id;
 	//console.log(newId);
@@ -99,6 +90,50 @@ app.get('/fetch/:id', (req, res) => {
 		});
 	});
 });
+
+//PUT call from client to server - updates dish information in place id
+app.put('/get', (req, res) => {
+    let UserId1 = req.body.UserId;
+    let GeneralFeeling = req.body.GeneralFeeling;
+    let Appetite = req.body.Appetite;
+    let Nausea = req.body.Nausea;
+    let BowelMovements = req.body.BowelMovements;
+    let Motivation = req.body.Motivation;
+    let Pain = req.body.Pain;
+    let Dizziness = req.body.Dizziness;
+    let Exhaustion = req.body.Exhaustion;
+	let updateSucceed = false;
+
+	console.log("1 document at ID " + UserId1 + " need to be updated");
+
+	mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+		if (err) {throw err;}
+		var dbObject = db.db("ifeelusers");
+		var myquery = {};		
+        let searchFieldName1 = "UserId";
+        myquery[searchFieldName1] = UserId1;
+        let newvalues = { $set: {TrackingGeneralFeeling: GeneralFeeling, 
+                                 TrackingAppetite: Appetite, 
+                                 TrackingNausea: Nausea, 
+                                 TrackingBowelMovements: BowelMovements, 
+                                 TrackingMotivation: Motivation,
+                                 TrackingPain: Pain,
+                                 TrackingDizziness: Dizziness,
+                                 TrackingExhaustion: Exhaustion} };
+		dbObject.collection("users").updateOne(myquery, newvalues, function(err, res) {
+			if (err) {throw err;}
+			console.log("1 document at UserId " + UserId1 + " updated " + res.result.nModified);
+			updateSucceed = true;
+			db.close();
+		});
+	});	
+	if(updateSucceed){
+		//we use res.send because otherwise the function on the client will get no success condition
+		res.send('succesfully updated User');
+	} else {
+        res.send('couldn\'t find UserId');
+    }
+})
 
 //this activates the server to listen at localhost with the port available OR port 3000
 let port = process.env.PORT || 4000;
