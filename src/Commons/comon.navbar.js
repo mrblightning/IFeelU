@@ -10,8 +10,8 @@ import login from '../Pages/page.login';
 import Symptoms from '../Pages/page.symptoms';
 /*Graph is where I define the graph class */
 import Graph from '../Pages/page.graph';
-/*SelectState is where I alloow to select your current state (1-5) */
-import SelectState from '../Pages/page.selectState';
+// /*SelectState is where I alloow to select your current state (1-5) */
+// import SelectState from '../Pages/page.selectState';
 /*BrowserRouter and so on are elements of react-router-dom to enable Routing  */
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
@@ -66,7 +66,7 @@ class Navbar extends React.Component {
                         <Route exact={true} path='/' component={login} />
                         <Route exact={true} path='/login' component={login} />
                         <Route exact={true} path='/tracksymptoms' component={Symptoms} />
-                        <Route exact={true} path='/selectState' component={SelectState} />
+                        {/* <Route exact={true} path='/selectState' component={SelectState} /> */}
                         <Route path='/pages/:id' component={Page} />
                         <Route exact={true} path='/graph' component={Graph} />  
                         <Route exact={true} path='/graph/:id' component={Graph} /> 

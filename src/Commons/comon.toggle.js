@@ -7,18 +7,7 @@ class Toggle extends React.Component {
 
         this.state = {
             checked: true,
-        };
-        if (this.props.initToggle === "true") {
-            this.state = {
-                checked: true,
-            };
-            // console.dir(this.props.toggleName + " " + this.props.initToggle + " " + setState);
-          } else {
-            this.state = {
-                checked: false,
-            };
-            //console.dir(this.props.toggleName + " " + this.props.initToggle + " " + setState);
-          } 
+        }; 
     }
 
     render() {
@@ -29,10 +18,10 @@ class Toggle extends React.Component {
             <div className="trackItem">
                 <div className="trackName">{this.props.toggleName}</div>
                 <Switch
-                    checked={checked}
+                    checked={this.props.checked}
                     onColor="#22aee4"
                     className="switch"
-                    onChange={checked => this.setState({ checked })}
+                    onChange={() => this.props.toggleChecked()}
                 />
             </div>
         );
