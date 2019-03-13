@@ -91,7 +91,7 @@ app.get('/fetch/:id', (req, res) => {
 	});
 });
 
-//PUT call from client to server - updates dish information in place id
+//PUT call from client to server - updates user tracking information in place UserId
 app.put('/get', (req, res) => {
     let UserId1 = req.body.UserId;
     let GeneralFeeling = req.body.GeneralFeeling;
@@ -134,6 +134,275 @@ app.put('/get', (req, res) => {
         res.send('couldn\'t find UserId');
     }
 })
+
+//PUT call from client to server - updates user records
+app.put('/set', (req, res) => {
+    let UserId1 = req.body.UserId;
+    let TrackGeneralFeeling = req.body.TrackGeneralFeeling;
+    let TrackAppetite = req.body.TrackAppetite;
+    let TrackNausea = req.body.TrackNausea;
+    let TrackBowelMovements = req.body.TrackBowelMovements;
+    let TrackMotivation = req.body.TrackMotivation;
+    let TrackPain = req.body.TrackPain;
+    let TrackDizziness = req.body.TrackDizziness;
+    let TrackExhaustion = req.body.TrackExhaustion;
+    let GeneralFeeling = req.body.GeneralFeeling;
+    let Appetite = req.body.Appetite;
+    let Nausea = req.body.Nausea;
+    let BowelMovements = req.body.BowelMovements;
+    let Motivation = req.body.Motivation;
+    let Pain = req.body.Pain;
+    let Dizziness = req.body.Dizziness;
+    let Exhaustion = req.body.Exhaustion;
+    let FirstName1 = req.body.FirstName;
+    let LastName1 = req.body.LastName;
+    let check1 = req.body.check;
+    let date1 = req.body.date;
+    let time1 = req.body.time;
+	let updateSucceed = false;
+
+    if(TrackGeneralFeeling){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "GeneralFeeling",
+                                     UserId: UserId1,
+                                     state: GeneralFeeling} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackAppetite){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "Appetite",
+                                     UserId: UserId1,
+                                     state: Appetite} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackNausea){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "Nausea",
+                                     UserId: UserId1,
+                                     state: Nausea} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackBowelMovements){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "BowelMovements",
+                                     UserId: UserId1,
+                                     state: BowelMovements} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackMotivation){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "Motivation",
+                                     UserId: UserId1,
+                                     state: Motivation} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackPain){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "Pain",
+                                     UserId: UserId1,
+                                     state: Pain} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackDizziness){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "Dizziness",
+                                     UserId: UserId1,
+                                     state: Dizziness} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+    if(TrackExhaustion){
+        //we need to create a record of GeneralFeeling for user UserId
+        mongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) {throw err;}
+            var dbObject = db.db("ifeelusers");
+            var myquery = {};		
+            let searchFieldName1 = "records";
+            myquery[searchFieldName1] = UserId1;
+            let newvalues = { $set: {FirstName: FirstName1, 
+                                     LastName: LastName1, 
+                                     check: check1, 
+                                     date: date1, 
+                                     time: time1,
+                                     RecordTracking: "Exhaustion",
+                                     UserId: UserId1,
+                                     state: Exhaustion} };
+            dbObject.collection("users").insertOne(newvalues, function(err, res) {
+                if (err) {throw err;}
+                console.log("1 document at UserId " + UserId1 + " inserted " + res.insertedCount);
+                updateSucceed = true;
+                db.close();
+            });
+        });	
+        if(updateSucceed){
+            //we use res.send because otherwise the function on the client will get no success condition
+            res.send('succesfully updated GeneralFeeling record');
+        } else {
+            res.send('couldn\'t find UserId');
+        }    
+    }
+})
+
 
 //this activates the server to listen at localhost with the port available OR port 3000
 let port = process.env.PORT || 4000;

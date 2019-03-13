@@ -291,7 +291,7 @@ input[type="checkbox"]:checked ~ #sidebarMenu {
 input[type=checkbox] {
   transition: all 0.3s;
   box-sizing: border-box;
-  display: none;
+  display: none; 
 }
 
 .sidebarIconToggle {
@@ -360,3 +360,13 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   transform: rotate(-135deg);
   margin-top: -9px;
 }
+
+/*For rhe SetState Page*/
+input[type=radio] {
+  opacity: 0;
+}
+
+input + img {
+	cursor: pointer;
+}
+

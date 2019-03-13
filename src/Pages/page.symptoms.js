@@ -6,18 +6,19 @@ import { Redirect } from 'react-router-dom'
 class Symptoms extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { GeneralFeeling: false,
-                       Appetite: false,
-                       Nausea: false,
-                       BowelMovements: false,
-                       Motivation: false,
-                       Pain: false,
-                       Dizziness: false,
-                       Exhaustion: false,  
-                       redirectBack: false,
-                       redirectNext: false,
-                       UserId: ""
-            }
+        this.state = {
+            GeneralFeeling: false,
+            Appetite: false,
+            Nausea: false,
+            BowelMovements: false,
+            Motivation: false,
+            Pain: false,
+            Dizziness: false,
+            Exhaustion: false,
+            redirectBack: false,
+            redirectNext: false,
+            UserId: ""
+        }
         this.renderRedirect = this.renderRedirect.bind(this);
         this.setRedirect = this.setRedirect.bind(this);
         this.BackHandler = this.BackHandler.bind(this);
@@ -37,11 +38,11 @@ class Symptoms extends React.Component {
         if (this.state.redirectBack) {
             console.log("renderRedirect Back");
             return <Redirect method="post" to={"/pages/redirectBack"}></Redirect>
-        } 
+        }
         if (this.state.redirectNext) {
             console.log("renderRedirect Next");
             return <Redirect method="post" to={"/pages/redirectNext"}></Redirect>
-        } 
+        }
     }
 
     setRedirect() {
@@ -52,7 +53,7 @@ class Symptoms extends React.Component {
     }
 
     //this function is for getting user data from server for an existing user in sessionStorage
-    async getStoredUser(id){
+    async getStoredUser(id) {
         console.log("getStoredUser");
         await fetch('http://localhost:4000/fetch', {
             method: "post",
@@ -65,31 +66,30 @@ class Symptoms extends React.Component {
             })
         }).then(response => {
             return response.json();
-            }).then((data) => {
-                console.log("Setting State");
-                if (data !== undefined) {
-                    this.setState({ 
-                        GeneralFeeling: data.TrackingGeneralFeeling,
-                        Appetite: data.TrackingAppetite,
-                        Nausea: data.TrackingNausea,
-                        BowelMovements: data.TrackingBowelMovements,
-                        Motivation: data.TrackingMotivation,
-                        Pain: data.TrackingPain,
-                        Dizziness: data.TrackingDizziness,
-                        Exhaustion: data.TrackingExhaustion,  
-                        UserId: data._id});
-                    console.log("Symptoms - got data from session: " + data.TrackingGeneralFeeling);
-                    //this.forceUpdate();
-                    //console.log("forceUpdate");
-                }
-            }).catch(Error => {
+        }).then((data) => {
+            console.log("Setting State");
+            if (data !== undefined) {
+                this.setState({
+                    GeneralFeeling: data.TrackingGeneralFeeling,
+                    Appetite: data.TrackingAppetite,
+                    Nausea: data.TrackingNausea,
+                    BowelMovements: data.TrackingBowelMovements,
+                    Motivation: data.TrackingMotivation,
+                    Pain: data.TrackingPain,
+                    Dizziness: data.TrackingDizziness,
+                    Exhaustion: data.TrackingExhaustion,
+                    UserId: data._id
+                });
+                console.log("Symptoms - got data from session: " + data.TrackingGeneralFeeling);
+            }
+        }).catch(Error => {
             console.log("Error with _ID from session: " + Error)
         })
     }
 
     //this function is for setting the symptom tracking variables for the user in the DB
     //once we pressed 'Next'
-    async UpdateTracking(id){
+    async UpdateTracking(id) {
         console.log("UpdateTracking");
         await fetch('http://localhost:4000/get', {
             method: "put",
@@ -106,12 +106,12 @@ class Symptoms extends React.Component {
                 Motivation: this.state.Motivation,
                 Pain: this.state.Pain,
                 Dizziness: this.state.Dizziness,
-                Exhaustion: this.state.Exhaustion  
+                Exhaustion: this.state.Exhaustion
             }),
-			success: (res) => {
-				console.log(res);
-				console.log("this is an UpdateTracking success");
-			}
+            success: (res) => {
+                console.log(res);
+                console.log("this is an UpdateTracking success");
+            }
         })
     }
 
@@ -123,53 +123,53 @@ class Symptoms extends React.Component {
         //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
         if (userFromSession != null) {
             console.log("there is a user saved in this session");
-            this.state._id = userFromSession;
+            this.state.UserId = userFromSession;
             this.getStoredUser(userFromSession);
-            //if(this.GeneralFeeling === undefined){this.setState({ GeneralFeeling: true })}
-        } 
+        }
         //if I do not have sessionStorage then I redirect to the login page
         else {
-            console.log("there is a NO user saved in this session");        }
+            console.log("there is a NO user saved in this session");
+        }
     }
 
 
-    switchGeneralFeelingHandler () {
-        this.setState({GeneralFeeling: !this.state.GeneralFeeling});
+    switchGeneralFeelingHandler() {
+        this.setState({ GeneralFeeling: !this.state.GeneralFeeling });
         console.log("GeneralFeeling: " + this.state.GeneralFeeling);
-    } 
-    
-    switchAppetiteHandler () {
-        this.setState({Appetite: !this.state.Appetite});
+    }
+
+    switchAppetiteHandler() {
+        this.setState({ Appetite: !this.state.Appetite });
         console.log("Appetite: " + this.state.Appetite);
     }
 
-    switchNauseaHandler () {
-        this.setState({Nausea: !this.state.Nausea});
+    switchNauseaHandler() {
+        this.setState({ Nausea: !this.state.Nausea });
         console.log("Nausea: " + this.state.Nausea);
     }
 
-    switchBowelMovementsHandler () {
-        this.setState({BowelMovements: !this.state.BowelMovements});
+    switchBowelMovementsHandler() {
+        this.setState({ BowelMovements: !this.state.BowelMovements });
         console.log("BowelMovements: " + this.state.BowelMovements);
     }
 
-    switchMotivationHandler () {
-        this.setState({Motivation: !this.state.Motivation});
+    switchMotivationHandler() {
+        this.setState({ Motivation: !this.state.Motivation });
         console.log("Motivation: " + this.state.Motivation);
     }
 
-    switchPainHandler () {
-        this.setState({Pain: !this.state.Pain});
+    switchPainHandler() {
+        this.setState({ Pain: !this.state.Pain });
         console.log("Pain: " + this.state.Pain);
     }
 
-    switchDizzinessHandler () {
-        this.setState({Dizziness: !this.state.Dizziness});
+    switchDizzinessHandler() {
+        this.setState({ Dizziness: !this.state.Dizziness });
         console.log("Dizziness: " + this.state.Dizziness);
     }
 
-    switchExhaustionHandler () {
-        this.setState({Exhaustion:!this.state.Exhaustion});
+    switchExhaustionHandler() {
+        this.setState({ Exhaustion: !this.state.Exhaustion });
         console.log("Exhaustion: " + this.state.Exhaustion);
     }
 
@@ -183,39 +183,36 @@ class Symptoms extends React.Component {
         console.dir(userFromSession);
         //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
         if (userFromSession != null) {
-            this.state._id = userFromSession;
+            this.state.UserId = userFromSession;
             this.UpdateTracking(userFromSession);
-        } 
+        }
         this.setState({ redirectNext: true });
     }
 
     render() {
         //console.log("render");
-            return (
-                <div className="pageContent" id="pageContent">
-                    <div className="pageTopText">I would like to track:</div>
-                    <div className="trackBox">
-                        <Toggle toggleName={"General Feeling"} checked={this.state.GeneralFeeling} toggleChecked={this.switchGeneralFeelingHandler}/>
-                        <Toggle toggleName={"Appetite"} checked={this.state.Appetite} toggleChecked={this.switchAppetiteHandler}/>
-                        <Toggle toggleName={"Nausea"} checked={this.state.Nausea} toggleChecked={this.switchNauseaHandler}/>
-                        <Toggle toggleName={"Bowel Movements"} checked={this.state.BowelMovements} toggleChecked={this.switchBowelMovementsHandler}/>
-                        <Toggle toggleName={"Motivation"} checked={this.state.Motivation} toggleChecked={this.switchMotivationHandler}/>
-                        <Toggle toggleName={"Pain"} checked={this.state.Pain} toggleChecked={this.switchPainHandler}/>
-                        <Toggle toggleName={"Dizziness"} checked={this.state.Dizziness} toggleChecked={this.switchDizzinessHandler}/>
-                        <Toggle toggleName={"Exhaustion"} checked={this.state.Exhaustion} toggleChecked={this.switchExhaustionHandler}/>
-                    </div>
-                    <div className="buttonArea">
-                        <input id="button" className="button buttonBack" type="submit" name="button" value="Back" 
-                        onClick={(e)=>this.BackHandler()} />
-                        <input id="button" className="button buttonNext" type="submit" name="button" value="Next" 
-                        onClick={(e)=>this.NextHandler()} />
-                        {this.renderRedirect()}
-                    </div>
+        return (
+            <div className="pageContent" id="pageContent">
+                <div className="pageTopText">I would like to track:</div>
+                <div className="trackBox">
+                    <Toggle toggleName={"General Feeling"} checked={this.state.GeneralFeeling} toggleChecked={this.switchGeneralFeelingHandler} />
+                    <Toggle toggleName={"Appetite"} checked={this.state.Appetite} toggleChecked={this.switchAppetiteHandler} />
+                    <Toggle toggleName={"Nausea"} checked={this.state.Nausea} toggleChecked={this.switchNauseaHandler} />
+                    <Toggle toggleName={"Bowel Movements"} checked={this.state.BowelMovements} toggleChecked={this.switchBowelMovementsHandler} />
+                    <Toggle toggleName={"Motivation"} checked={this.state.Motivation} toggleChecked={this.switchMotivationHandler} />
+                    <Toggle toggleName={"Pain"} checked={this.state.Pain} toggleChecked={this.switchPainHandler} />
+                    <Toggle toggleName={"Dizziness"} checked={this.state.Dizziness} toggleChecked={this.switchDizzinessHandler} />
+                    <Toggle toggleName={"Exhaustion"} checked={this.state.Exhaustion} toggleChecked={this.switchExhaustionHandler} />
                 </div>
-            )
-        //} else {
-        //    return null;
-        //}   
+                <div className="buttonArea">
+                    <input id="button" className="button buttonBack" type="submit" name="button" value="Back"
+                        onClick={(e) => this.BackHandler()} />
+                    <input id="button" className="button buttonNext" type="submit" name="button" value="Next"
+                        onClick={(e) => this.NextHandler()} />
+                    {this.renderRedirect()}
+                </div>
+            </div>
+        )  
     }
 }
 
