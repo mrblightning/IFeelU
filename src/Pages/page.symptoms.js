@@ -56,6 +56,7 @@ class Symptoms extends React.Component {
     async getStoredUser(id) {
         console.log("getStoredUser");
         await fetch('http://localhost:4000/fetch', {
+        //await fetch('fetch', {    
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -92,6 +93,7 @@ class Symptoms extends React.Component {
     async UpdateTracking(id) {
         console.log("UpdateTracking");
         await fetch('http://localhost:4000/get', {
+        //await fetch('get', {    
             method: "put",
             headers: {
                 'Accept': 'application/json',

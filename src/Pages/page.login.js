@@ -36,6 +36,7 @@ class Login extends React.Component {
     async getStoredUser(id){
         console.log("getStoredUser");
         await fetch('http://localhost:4000/fetch', {
+        //await fetch('fetch', {    
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -70,7 +71,7 @@ class Login extends React.Component {
         console.log("loginHandler");
         console.log(SentUserName);
         await fetch('http://localhost:4000/fetch', {
-        //await fetch('http://IITC-405:4000/fetch', {    
+        //await fetch('fetch', {       
             method: "post",
             headers: {
                 'Accept': 'application/json',

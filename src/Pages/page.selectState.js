@@ -74,6 +74,7 @@ class RadioContainer extends React.Component {
   async getStoredUser(id) {
     console.log("getStoredUser");
     await fetch('http://localhost:4000/fetch', {
+    //await fetch('fetch', {  
       method: "post",
       headers: {
         'Accept': 'application/json',
@@ -172,6 +173,7 @@ class RadioContainer extends React.Component {
   async WriteRecord(id) {
     console.log("Update Symptom State");
     await fetch('http://localhost:4000/set', {
+    //await fetch('set', {  
       method: "put",
       headers: {
         'Accept': 'application/json',
