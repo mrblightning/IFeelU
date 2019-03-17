@@ -144,3 +144,38 @@ let url = "mongodb://ifeelusers-6133:HQJbSCVKH1mDIm65jVFLehl3XXIUjU@db-ifeeluser
 	// 	  db.close();
 	// 	});
   // });  
+
+
+//   dbObject.collection("records").findOne(myquery, {sort: {_id:-1}}, function (err, res) { 
+//     if (err) {throw err;}
+//     console.log("found 1 innerId with _id " + result._id);
+//     db.close();
+//     let searchFieldName3 = "_id";
+//     myquery[searchFieldName3] = result._id;
+//     dbObject.collection("records").updateOne(myquery, newvalues, function (err, res) {
+//         if (err) { throw err; }
+//         console.log("1 document at UserId " + UserId1 + " updated " + res.result.nModified);
+//         updateSucceed = true;
+//         db.close();
+//     });   
+// });
+
+            // dbObject.collection("records").findOne(myquery, { sort: { _id: -1 }, limit: 1 }, function (err, result) {
+            //     if (err) { throw err };
+            //     if (result._id != undefined) {
+            //         console.log("sort result:");
+            //         console.log(result);
+            //         let innerId = result._id;
+            //         return innerId;
+            //     }
+            // });
+            // if(innerId != undefined){
+            //     let searchFieldName3 = "_id";
+            //     myquery[searchFieldName3] = innerId;
+            //     dbObject.collection("records").updateOne(myquery, newvalues, function (err, res) {
+            //         if (err) { throw err; }
+            //         console.log("1 document at UserId " + UserId1 + " updated " + res.result.nModified);
+            //         updateSucceed = true;
+            //         db.close();
+            //     });
+            // }    

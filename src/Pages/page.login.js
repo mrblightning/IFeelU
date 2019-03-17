@@ -111,7 +111,7 @@ class Login extends React.Component {
         //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
         if (userFromSession != null) {
             console.log("there is a user saved in this session");
-            this.state._id = userFromSession;
+            this.setState({ UserId: userFromSession });
             this.getStoredUser(userFromSession);
         } 
         //if I do not have sessionStorage then I redirect to the login page

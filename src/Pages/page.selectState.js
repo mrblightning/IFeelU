@@ -28,8 +28,10 @@ class RadioContainer extends React.Component {
       LastName: '',
       UserId: '',
       check: '',
-      date: '',
-      time: '',
+      currentDate: '',
+      currentTime: '',
+      conditions: '', 
+      treatments: '',
       //these variables are used in the redirection assosiated with the buttons at thye bottom of the page
       redirectBack: false,
       redirectNext: false
@@ -101,10 +103,12 @@ class RadioContainer extends React.Component {
           FirstName: data.FirstName,
           LastName: data.LastName,
           check: '',
-          date: this.getCurrentDate(),
-          time: this.getCurrentTime()
+          conditions: data.conditions, 
+          treatments: data.treatments,
+          currentDate: this.getCurrentDate(),
+          currentTime: this.getCurrentTime()
         });
-        console.log("Symptoms - got data from session: " + data.TrackingGeneralFeeling);
+        console.log("Getting user data: " + this.state.FirstName + " " + this.state.LastName + " " + this.state.currentDate + " " + this.state.currentTime);
       }
     }).catch(Error => {
       console.log("Error with _ID from session: " + Error)
@@ -197,10 +201,17 @@ class RadioContainer extends React.Component {
         Pain: this.state.Pain,
         Dizziness: this.state.Dizziness,
         Exhaustion: this.state.Exhaustion,
+        FirstName: this.state.FirstName,
+        LastName: this.state.LastName,
+        check: '',
+        currentDate: this.state.currentDate,
+        currentTime: this.state.currentTime,
+        conditions: this.state.conditions, 
+        treatments: this.state.treatments
       }),
       success: (res) => {
         console.log(res);
-        console.log("this is an WriteRecord success");
+        console.log("this is a WriteRecord success");
       }
     })
   }
@@ -216,7 +227,7 @@ class RadioContainer extends React.Component {
     console.dir(userFromSession);
     //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
     if (userFromSession != null) {
-      this.state.UserId = userFromSession;
+      this.setState({ UserId: userFromSession });
       this.WriteRecord(userFromSession);
     }
     this.setState({ redirectNext: true });
@@ -225,11 +236,11 @@ class RadioContainer extends React.Component {
   renderRedirect() {
     if (this.state.redirectBack) {
       console.log("renderRedirect Back");
-      return <Redirect method="post" to={"/pages/redirectBack"}></Redirect>
+      return <Redirect method="post" to={"/tracksymptoms"}></Redirect>
     }
     if (this.state.redirectNext) {
       console.log("renderRedirect Next");
-      return <Redirect method="post" to={"/pages/redirectNext"}></Redirect>
+      return <Redirect method="post" to={"/addText"}></Redirect>
     }
   }
 
@@ -246,107 +257,107 @@ class RadioContainer extends React.Component {
         <React.Fragment>
           <div onChange={event => this.setGeneralFeeling(event)} style={{ display: this.state.TrackGeneralFeeling ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your General Feeling </div><br />
-            <label><input type='radio' value='1' name='GeneralFeeling' checked={this.state.GeneralFeeling === '1'} onChange={this.setGeneralFeeling} />
-              <img src={(this.state.GeneralFeeling === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Feeling level 1" /></label>
-            <label><input type='radio' value='2' name='GeneralFeeling' checked={this.state.GeneralFeeling === '2'} onChange={this.setGeneralFeeling} />
-              <img src={(this.state.GeneralFeeling === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Feeling level 2" /></label>
-            <label><input type='radio' value='3' name='GeneralFeeling' checked={this.state.GeneralFeeling === '3'} onChange={this.setGeneralFeeling} />
-              <img src={(this.state.GeneralFeeling === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Feeling level 3" /></label>
-            <label><input type='radio' value='4' name='GeneralFeeling' checked={this.state.GeneralFeeling === '4'} onChange={this.setGeneralFeeling} />
-              <img src={(this.state.GeneralFeeling === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Feeling level 4" /></label>
-            <label><input type='radio' value='5' name='GeneralFeeling' checked={this.state.GeneralFeeling === '5'} onChange={this.setGeneralFeeling} />
-              <img src={(this.state.GeneralFeeling === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Feeling level 5" /></label>
+            <label><input type='radio' value='1' name='GeneralFeeling' checked={this.state.GeneralFeeling === '1'} onChange={this.setGeneralFeeling}  style={{ display: 'none' }}/>
+              <img src={(this.state.GeneralFeeling === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Feeling level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='GeneralFeeling' checked={this.state.GeneralFeeling === '2'} onChange={this.setGeneralFeeling} style={{ display: 'none' }}/>
+              <img src={(this.state.GeneralFeeling === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Feeling level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='GeneralFeeling' checked={this.state.GeneralFeeling === '3'} onChange={this.setGeneralFeeling} style={{ display: 'none' }}/>
+              <img src={(this.state.GeneralFeeling === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Feeling level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='GeneralFeeling' checked={this.state.GeneralFeeling === '4'} onChange={this.setGeneralFeeling} style={{ display: 'none' }}/>
+              <img src={(this.state.GeneralFeeling === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Feeling level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='GeneralFeeling' checked={this.state.GeneralFeeling === '5'} onChange={this.setGeneralFeeling} style={{ display: 'none' }}/>
+              <img src={(this.state.GeneralFeeling === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Feeling level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setAppetite(event)} style={{ display: this.state.TrackAppetite ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Appetite </div><br />
-            <label><input type='radio' value='1' name='Appetite' checked={this.state.Appetite === '1'} onChange={this.setAppetite} />
-              <img src={(this.state.Appetite === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Appetite level 1" /></label>
-            <label><input type='radio' value='2' name='Appetite' checked={this.state.Appetite === '2'} onChange={this.setAppetite} />
-              <img src={(this.state.Appetite === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Appetite level 2" /></label>
-            <label><input type='radio' value='3' name='Appetite' checked={this.state.Appetite === '3'} onChange={this.setAppetite} />
-              <img src={(this.state.Appetite === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Appetite level 3" /></label>
-            <label><input type='radio' value='4' name='Appetite' checked={this.state.Appetite === '4'} onChange={this.setAppetite} />
-              <img src={(this.state.Appetite === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Appetite level 4" /></label>
-            <label><input type='radio' value='5' name='Appetite' checked={this.state.Appetite === '5'} onChange={this.setAppetite} />
-              <img src={(this.state.Appetite === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Appetite level 5" /></label>
+            <label><input type='radio' value='1' name='Appetite' checked={this.state.Appetite === '1'} onChange={this.setAppetite} style={{ display: 'none' }}/>
+              <img src={(this.state.Appetite === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Appetite level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='Appetite' checked={this.state.Appetite === '2'} onChange={this.setAppetite} style={{ display: 'none' }}/>
+              <img src={(this.state.Appetite === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Appetite level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='Appetite' checked={this.state.Appetite === '3'} onChange={this.setAppetite} style={{ display: 'none' }}/>
+              <img src={(this.state.Appetite === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Appetite level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='Appetite' checked={this.state.Appetite === '4'} onChange={this.setAppetite} style={{ display: 'none' }}/>
+              <img src={(this.state.Appetite === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Appetite level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='Appetite' checked={this.state.Appetite === '5'} onChange={this.setAppetite} style={{ display: 'none' }}/>
+              <img src={(this.state.Appetite === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Appetite level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setNausea(event)} style={{ display: this.state.TrackNausea ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Nausea </div><br />
-            <label><input type='radio' value='1' name='Nausea' checked={this.state.Nausea === '1'} onChange={this.setNausea} />
-              <img src={(this.state.Nausea === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Nausea level 1" /></label>
-            <label><input type='radio' value='2' name='Nausea' checked={this.state.Nausea === '2'} onChange={this.setNausea} />
-              <img src={(this.state.Nausea === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Nausea level 2" /></label>
-            <label><input type='radio' value='3' name='Nausea' checked={this.state.Nausea === '3'} onChange={this.setNausea} />
-              <img src={(this.state.Nausea === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Nausea level 3" /></label>
-            <label><input type='radio' value='4' name='Nausea' checked={this.state.Nausea === '4'} onChange={this.setNausea} />
-              <img src={(this.state.Nausea === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Nausea level 4" /></label>
-            <label><input type='radio' value='5' name='Nausea' checked={this.state.Nausea === '5'} onChange={this.setNausea} />
-              <img src={(this.state.Nausea === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Nausea level 5" /></label>
+            <label><input type='radio' value='1' name='Nausea' checked={this.state.Nausea === '1'} onChange={this.setNausea} style={{ display: 'none' }}/>
+              <img src={(this.state.Nausea === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Nausea level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='Nausea' checked={this.state.Nausea === '2'} onChange={this.setNausea} style={{ display: 'none' }}/>
+              <img src={(this.state.Nausea === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Nausea level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='Nausea' checked={this.state.Nausea === '3'} onChange={this.setNausea} style={{ display: 'none' }}/>
+              <img src={(this.state.Nausea === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Nausea level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='Nausea' checked={this.state.Nausea === '4'} onChange={this.setNausea} style={{ display: 'none' }}/>
+              <img src={(this.state.Nausea === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Nausea level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='Nausea' checked={this.state.Nausea === '5'} onChange={this.setNausea} style={{ display: 'none' }}/>
+              <img src={(this.state.Nausea === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Nausea level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setBowelMovements(event)} style={{ display: this.state.TrackBowelMovements ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Bowel Movements </div><br />
-            <label><input type='radio' value='1' name='BowelMovements' checked={this.state.BowelMovements === '1'} onChange={this.setBowelMovements} />
-              <img src={(this.state.BowelMovements === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Bowel Movements level 1" /></label>
-            <label><input type='radio' value='2' name='BowelMovements' checked={this.state.BowelMovements === '2'} onChange={this.setBowelMovements} />
-              <img src={(this.state.BowelMovements === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Bowel Movements level 2" /></label>
-            <label><input type='radio' value='3' name='BowelMovements' checked={this.state.BowelMovements === '3'} onChange={this.setBowelMovements} />
-              <img src={(this.state.BowelMovements === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Bowel Movements level 3" /></label>
-            <label><input type='radio' value='4' name='BowelMovements' checked={this.state.BowelMovements === '4'} onChange={this.setBowelMovements} />
-              <img src={(this.state.BowelMovements === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Bowel Movements level 4" /></label>
-            <label><input type='radio' value='5' name='BowelMovements' checked={this.state.BowelMovements === '5'} onChange={this.setBowelMovements} />
-              <img src={(this.state.BowelMovements === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Bowel Movements level 5" /></label>
+            <label><input type='radio' value='1' name='BowelMovements' checked={this.state.BowelMovements === '1'} onChange={this.setBowelMovements} style={{ display: 'none' }}/>
+              <img src={(this.state.BowelMovements === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Bowel Movements level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='BowelMovements' checked={this.state.BowelMovements === '2'} onChange={this.setBowelMovements} style={{ display: 'none' }}/>
+              <img src={(this.state.BowelMovements === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Bowel Movements level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='BowelMovements' checked={this.state.BowelMovements === '3'} onChange={this.setBowelMovements} style={{ display: 'none' }}/>
+              <img src={(this.state.BowelMovements === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Bowel Movements level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='BowelMovements' checked={this.state.BowelMovements === '4'} onChange={this.setBowelMovements} style={{ display: 'none' }}/>
+              <img src={(this.state.BowelMovements === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Bowel Movements level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='BowelMovements' checked={this.state.BowelMovements === '5'} onChange={this.setBowelMovements} style={{ display: 'none' }}/>
+              <img src={(this.state.BowelMovements === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Bowel Movements level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setMotivation(event)} style={{ display: this.state.TrackMotivation ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Motivation </div><br />
-            <label><input type='radio' value='1' name='Motivation' checked={this.state.Motivation === '1'} onChange={this.setMotivation} />
-              <img src={(this.state.Motivation === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Motivation level 1" /></label>
-            <label><input type='radio' value='2' name='Motivation' checked={this.state.Motivation === '2'} onChange={this.setMotivation} />
-              <img src={(this.state.Motivation === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Motivation level 2" /></label>
-            <label><input type='radio' value='3' name='Motivation' checked={this.state.Motivation === '3'} onChange={this.setMotivation} />
-              <img src={(this.state.Motivation === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Motivation level 3" /></label>
-            <label><input type='radio' value='4' name='Motivation' checked={this.state.Motivation === '4'} onChange={this.setMotivation} />
-              <img src={(this.state.Motivation === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Motivation level 4" /></label>
-            <label><input type='radio' value='5' name='Motivation' checked={this.state.Motivation === '5'} onChange={this.setMotivation} />
-              <img src={(this.state.Motivation === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Motivation level 5" /></label>
+            <label><input type='radio' value='1' name='Motivation' checked={this.state.Motivation === '1'} onChange={this.setMotivation} style={{ display: 'none' }}/>
+              <img src={(this.state.Motivation === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Motivation level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='Motivation' checked={this.state.Motivation === '2'} onChange={this.setMotivation} style={{ display: 'none' }}/>
+              <img src={(this.state.Motivation === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Motivation level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='Motivation' checked={this.state.Motivation === '3'} onChange={this.setMotivation} style={{ display: 'none' }}/>
+              <img src={(this.state.Motivation === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Motivation level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='Motivation' checked={this.state.Motivation === '4'} onChange={this.setMotivation} style={{ display: 'none' }}/>
+              <img src={(this.state.Motivation === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Motivation level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='Motivation' checked={this.state.Motivation === '5'} onChange={this.setMotivation} style={{ display: 'none' }}/>
+              <img src={(this.state.Motivation === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Motivation level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setPain(event)} style={{ display: this.state.TrackPain ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Pain </div><br />
-            <label><input type='radio' value='1' name='Pain' checked={this.state.Pain === '1'} onChange={this.setPain} />
-              <img src={(this.state.Pain === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Pain level 1" /></label>
-            <label><input type='radio' value='2' name='Pain' checked={this.state.Pain === '2'} onChange={this.setPain} />
-              <img src={(this.state.Pain === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Pain level 2" /></label>
-            <label><input type='radio' value='3' name='Pain' checked={this.state.Pain === '3'} onChange={this.setPain} />
-              <img src={(this.state.Pain === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Pain level 3" /></label>
-            <label><input type='radio' value='4' name='Pain' checked={this.state.Pain === '4'} onChange={this.setPain} />
-              <img src={(this.state.Pain === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Pain level 4" /></label>
-            <label><input type='radio' value='5' name='Pain' checked={this.state.Pain === '5'} onChange={this.setPain} />
-              <img src={(this.state.Pain === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Pain level 5" /></label>
+            <label><input type='radio' value='1' name='Pain' checked={this.state.Pain === '1'} onChange={this.setPain} style={{ display: 'none' }}/>
+              <img src={(this.state.Pain === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Pain level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='Pain' checked={this.state.Pain === '2'} onChange={this.setPain} style={{ display: 'none' }}/>
+              <img src={(this.state.Pain === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Pain level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='Pain' checked={this.state.Pain === '3'} onChange={this.setPain} style={{ display: 'none' }}/>
+              <img src={(this.state.Pain === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Pain level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='Pain' checked={this.state.Pain === '4'} onChange={this.setPain} style={{ display: 'none' }}/>
+              <img src={(this.state.Pain === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Pain level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='Pain' checked={this.state.Pain === '5'} onChange={this.setPain} style={{ display: 'none' }}/>
+              <img src={(this.state.Pain === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Pain level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setDizziness(event)} style={{ display: this.state.TrackDizziness ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Dizziness </div><br />
-            <label><input type='radio' value='1' name='Dizziness' checked={this.state.Dizziness === '1'} onChange={this.setDizziness} />
-              <img src={(this.state.Dizziness === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Dizziness level 1" /></label>
-            <label><input type='radio' value='2' name='Dizziness' checked={this.state.Dizziness === '2'} onChange={this.setDizziness} />
-              <img src={(this.state.Dizziness === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Dizziness level 2" /></label>
-            <label><input type='radio' value='3' name='Dizziness' checked={this.state.Dizziness === '3'} onChange={this.setDizziness} />
-              <img src={(this.state.Dizziness === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Dizziness level 3" /></label>
-            <label><input type='radio' value='4' name='Dizziness' checked={this.state.Dizziness === '4'} onChange={this.setDizziness} />
-              <img src={(this.state.Dizziness === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Dizziness level 4" /></label>
-            <label><input type='radio' value='5' name='Dizziness' checked={this.state.Dizziness === '5'} onChange={this.setDizziness} />
-              <img src={(this.state.Dizziness === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Dizziness level 5" /></label>
+            <label><input type='radio' value='1' name='Dizziness' checked={this.state.Dizziness === '1'} onChange={this.setDizziness} style={{ display: 'none' }}/>
+              <img src={(this.state.Dizziness === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Dizziness level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='Dizziness' checked={this.state.Dizziness === '2'} onChange={this.setDizziness} style={{ display: 'none' }}/>
+              <img src={(this.state.Dizziness === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Dizziness level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='Dizziness' checked={this.state.Dizziness === '3'} onChange={this.setDizziness} style={{ display: 'none' }}/>
+              <img src={(this.state.Dizziness === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Dizziness level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='Dizziness' checked={this.state.Dizziness === '4'} onChange={this.setDizziness} style={{ display: 'none' }}/>
+              <img src={(this.state.Dizziness === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Dizziness level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='Dizziness' checked={this.state.Dizziness === '5'} onChange={this.setDizziness}style={{ display: 'none' }} />
+              <img src={(this.state.Dizziness === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Dizziness level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div onChange={event => this.setExhaustion(event)} style={{ display: this.state.TrackExhaustion ? 'block' : 'none' }}>
             <div className="pageTopText"> Track Your Exhaustion </div><br />
-            <label><input type='radio' value='1' name='Exhaustion' checked={this.state.Exhaustion === '1'} onChange={this.setExhaustion} />
-              <img src={(this.state.Exhaustion === '1') ? '../img/1s.jpg' : '../img/1w.jpg'} alt="Exhaustion level 1" /></label>
-            <label><input type='radio' value='2' name='Exhaustion' checked={this.state.Exhaustion === '2'} onChange={this.setExhaustion} />
-              <img src={(this.state.Exhaustion === '2') ? '../img/2s.jpg' : '../img/2w.jpg'} alt="Exhaustion level 2" /></label>
-            <label><input type='radio' value='3' name='Exhaustion' checked={this.state.Exhaustion === '3'} onChange={this.setExhaustion} />
-              <img src={(this.state.Exhaustion === '3') ? '../img/3s.jpg' : '../img/3w.jpg'} alt="Exhaustion level 3" /></label>
-            <label><input type='radio' value='4' name='Exhaustion' checked={this.state.Exhaustion === '4'} onChange={this.setExhaustion} />
-              <img src={(this.state.Exhaustion === '4') ? '../img/4s.jpg' : '../img/4w.jpg'} alt="Exhaustion level 4" /></label>
-            <label><input type='radio' value='5' name='Exhaustion' checked={this.state.Exhaustion === '5'} onChange={this.setExhaustion} />
-              <img src={(this.state.Exhaustion === '5') ? '../img/5s.jpg' : '../img/5w.jpg'} alt="Exhaustion level 5" /></label>
+            <label><input type='radio' value='1' name='Exhaustion' checked={this.state.Exhaustion === '1'} onChange={this.setExhaustion} style={{ display: 'none' }}/>
+              <img src={(this.state.Exhaustion === '1') ? '../img/1s.png' : '../img/1w.png'} alt="Exhaustion level 1" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='2' name='Exhaustion' checked={this.state.Exhaustion === '2'} onChange={this.setExhaustion} style={{ display: 'none' }}/>
+              <img src={(this.state.Exhaustion === '2') ? '../img/2s.png' : '../img/2w.png'} alt="Exhaustion level 2" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='3' name='Exhaustion' checked={this.state.Exhaustion === '3'} onChange={this.setExhaustion} style={{ display: 'none' }}/>
+              <img src={(this.state.Exhaustion === '3') ? '../img/3s.png' : '../img/3w.png'} alt="Exhaustion level 3" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='4' name='Exhaustion' checked={this.state.Exhaustion === '4'} onChange={this.setExhaustion} style={{ display: 'none' }}/>
+              <img src={(this.state.Exhaustion === '4') ? '../img/4s.png' : '../img/4w.png'} alt="Exhaustion level 4" style={{ marginRight: '10px' }}/></label>
+            <label><input type='radio' value='5' name='Exhaustion' checked={this.state.Exhaustion === '5'} onChange={this.setExhaustion} style={{ display: 'none' }}/>
+              <img src={(this.state.Exhaustion === '5') ? '../img/5s.png' : '../img/5w.png'} alt="Exhaustion level 5" style={{ marginRight: '10px' }}/></label>
           </div>
           <div className="buttonArea">
             <input id="button" className="button buttonBack" type="submit" name="button" value="Back"

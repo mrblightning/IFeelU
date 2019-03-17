@@ -13,6 +13,8 @@ import Symptoms from '../Pages/page.symptoms';
 import Graph from '../Pages/page.graph';
 /*SelectState is where I alloow to select your current state (1-5) */
 import SelectState from '../Pages/page.selectState';
+/*SelectState is where I alloow to select your current state (1-5) */
+import addText from '../Pages/page.addText';
 /*BrowserRouter and so on are elements of react-router-dom to enable Routing  */
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
@@ -59,7 +61,7 @@ class Navbar extends React.Component {
                             <li onClick={this.props.menuState}>
                                 <Link to={`/selectState`}>Select State</Link></li>
                             <li onClick={this.props.menuState}>
-                                <Link to={`/pages/Linkedin`}>Linkedin</Link></li>
+                                <Link to={`/addText`}>Add Text</Link></li>
                         </ul>
                     </div>
                     <div className='wrapper'>
@@ -68,6 +70,7 @@ class Navbar extends React.Component {
                         <Route exact={true} path='/login' component={login} />
                         <Route exact={true} path='/tracksymptoms' component={Symptoms} />
                         <Route exact={true} path='/selectState' component={SelectState} />
+                        <Route exact={true} path='/addText' component={addText} />
                         <Route path='/pages/:id' component={Page} />
                         <Route exact={true} path='/graph' component={Graph} />  
                         <Route exact={true} path='/graph/:id' component={Graph} /> 

@@ -11,7 +11,7 @@ class Toggle extends React.Component {
     }
 
     render() {
-        const { checked } = this.state;
+        //const { checked } = this.state;
         //console.dir(this.props.toggleName + " " + this.props.initToggle + " " + this.state.checked);
 
         return (

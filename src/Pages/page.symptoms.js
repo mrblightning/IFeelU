@@ -37,11 +37,11 @@ class Symptoms extends React.Component {
     renderRedirect() {
         if (this.state.redirectBack) {
             console.log("renderRedirect Back");
-            return <Redirect method="post" to={"/pages/redirectBack"}></Redirect>
+            return <Redirect method="post" to={"/login"}></Redirect>
         }
         if (this.state.redirectNext) {
             console.log("renderRedirect Next");
-            return <Redirect method="post" to={"/pages/redirectNext"}></Redirect>
+            return <Redirect method="post" to={"/selectState"}></Redirect>
         }
     }
 
@@ -92,6 +92,16 @@ class Symptoms extends React.Component {
     //once we pressed 'Next'
     async UpdateTracking(id) {
         console.log("UpdateTracking");
+        //if the user didn't touch the buttons there is a chance some or all of the trackers
+        //will be undefined. these tests make sure that if a tracker is undefined it is set as false
+        if(this.state.GeneralFeeling === undefined){this.setState({ GeneralFeeling: false })}
+        if(this.state.Appetite === undefined){this.setState({ Appetite: false })}
+        if(this.state.Nausea === undefined){this.setState({ Nausea: false })}
+        if(this.state.BowelMovements === undefined){this.setState({ BowelMovements: false })}
+        if(this.state.Motivation === undefined){this.setState({ Motivation: false })}
+        if(this.state.Pain === undefined){this.setState({ Pain: false })}
+        if(this.state.Dizziness === undefined){this.setState({ Dizziness: false })}
+        if(this.state.Exhaustion === undefined){this.setState({ Exhaustion: false })}
         await fetch('http://localhost:4000/get', {
         //await fetch('get', {    
             method: "put",
@@ -112,7 +122,7 @@ class Symptoms extends React.Component {
             }),
             success: (res) => {
                 console.log(res);
-                console.log("this is an UpdateTracking success");
+                console.log("this is a UpdateTracking success");
             }
         })
     }
@@ -125,7 +135,7 @@ class Symptoms extends React.Component {
         //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
         if (userFromSession != null) {
             console.log("there is a user saved in this session");
-            this.state.UserId = userFromSession;
+            this.setState({ UserId: userFromSession });
             this.getStoredUser(userFromSession);
         }
         //if I do not have sessionStorage then I redirect to the login page
@@ -185,7 +195,7 @@ class Symptoms extends React.Component {
         console.dir(userFromSession);
         //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
         if (userFromSession != null) {
-            this.state.UserId = userFromSession;
+            this.setState({ UserId: userFromSession });
             this.UpdateTracking(userFromSession);
         }
         this.setState({ redirectNext: true });
@@ -217,16 +227,6 @@ class Symptoms extends React.Component {
         )  
     }
 }
-
-const symptoms = ({ match }) => {
-
-    return (
-        <div>
-            <Symptoms />
-        </div>
-    )
-}
-
 
 export default Symptoms
 
