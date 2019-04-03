@@ -1,4 +1,6 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
+
 /*To enable Pan and Zoom that are defined in chartjs-plugin-zoom*/
 import * as zoom from 'chartjs-plugin-zoom';
 // import { finished } from 'stream';
@@ -18,11 +20,13 @@ class Graph extends React.Component {
 			TrackPain: false,
 			TrackDizziness: false,
 			TrackExhaustion: false,
+			redirectLogin: false,
 			UserId: ''
 		};
 
 		//this binding is needed to make 'this' work in the callback 
 		this.renderExtraText = this.renderExtraText.bind(this);
+		this.renderRedirect = this.renderRedirect.bind(this);
 	}
 
 	//this will redraw the page WITH the added text at the bottom
@@ -308,7 +312,7 @@ class Graph extends React.Component {
 		async function getStoredUser(id) {
 			console.log("getStoredUser");
 			await fetch('http://localhost:4000/fetch', {
-				//await fetch('fetch', {  
+			//await fetch('fetch', {  
 				method: "post",
 				headers: {
 					'Accept': 'application/json',
@@ -333,7 +337,7 @@ class Graph extends React.Component {
 						TrackExhaustion: data.TrackingExhaustion,
 						UserId: data._id,
 					});
-					console.log("Getting user data: " + currentComponent.state.FirstName);
+					console.log("Getting user data: " + currentComponent.state.UserId );
 				}
 			}).catch(Error => {
 				console.log("Error with _ID from session: " + Error)
@@ -518,9 +522,20 @@ class Graph extends React.Component {
 			console.log("call data for " + userFromSession);
 			commitGraph(userFromSession);
 		}
+		else {
+			this.setState({ redirectLogin: true });
+			console.log("there is a NO user saved in this session");
+		}
 
 		//Now that the Chart is full of Data we can move on to the rendering
 	}
+
+	renderRedirect() {
+		if (this.state.redirectLogin) {
+		  console.log("renderRedirect Login");
+		  return <Redirect method="post" to={"/login"}></Redirect>
+		}
+	  }	
 
 	render() {
 		return (
@@ -532,6 +547,7 @@ class Graph extends React.Component {
 				<div className="extraText">
 					{this.state.extraText}
 				</div>
+				{this.renderRedirect()}
 			</div>
 		);
 	}

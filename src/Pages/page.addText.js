@@ -26,7 +26,8 @@ class TextContainer extends React.Component {
       //these variables are used in the redirection assosiated with the buttons at thye bottom of the page
       UserId:'',
       redirectBack: false,
-      redirectNext: false
+      redirectNext: false,
+      redirectLogin: false
     }
     this.renderRedirect = this.renderRedirect.bind(this);
     this.setRedirect = this.setRedirect.bind(this);
@@ -123,6 +124,7 @@ class TextContainer extends React.Component {
     }
     //if I do not have sessionStorage then I redirect to the login page
     else {
+      this.setState({ redirectLogin: true });
       console.log("there is a NO user saved in this session");
     }
   }
@@ -189,6 +191,10 @@ class TextContainer extends React.Component {
     if (this.state.redirectNext) {
       console.log("renderRedirect Next");
       return <Redirect method="post" to={"/graph"}></Redirect>
+    }
+    if (this.state.redirectLogin) {
+      console.log("renderRedirect Login");
+      return <Redirect method="post" to={"/login"}></Redirect>
     }
   }
 

@@ -11,10 +11,15 @@ import login from '../Pages/page.login';
 import Symptoms from '../Pages/page.symptoms';
 /*Graph is where I define the graph class */
 import Graph from '../Pages/page.graph';
-/*SelectState is where I alloow to select your current state (1-5) */
+/*SelectState is where I allow to select your current state (1-5) */
 import SelectState from '../Pages/page.selectState';
-/*SelectState is where I alloow to select your current state (1-5) */
+/*addText is where I add the extra text for each of the states you follow */
 import addText from '../Pages/page.addText';
+/*RegistrationForm is where we register a new user */
+//import RegistrationForm from '../Pages/page.registration';
+/*UserUpdateForm is where we update details for an existing user */
+import UserUpdateForm from '../Pages/page.userUpdate';
+
 /*BrowserRouter and so on are elements of react-router-dom to enable Routing  */
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
@@ -29,11 +34,13 @@ class Navbar extends React.Component {
             <Router>
                 <div>
                     <div className="header">
-                        <div className="headerText">IFEELU</div>
+                        <div className="headerText"><span>IFEELU</span></div>
                         <div className="logo">
+                            <span>
                             <a href="https://ifeelu-6133.nodechef.com/">
                                 <img src="https://drive.google.com/uc?id=14MW9Z9pz9of-krcV5qLRLs_gvjmE1Sny" alt="IFeelU Logo" />
                             </a>
+                            </span>
                         </div>
                     </div>
                     <input type="checkbox" className="openSidebarMenu" id="openSidebarMenu"
@@ -49,19 +56,21 @@ class Navbar extends React.Component {
                     <div id="sidebarMenu" className={cName}>
                         <ul className="sidebarMenuInner">
                             {/*<Link> changes the URL*/}
+                            {/*<li onClick={this.props.menuState}>
+                             <Link to={`/`}>Barak Brudo <span>Web Developer</span></Link></li>*/}
                             <li onClick={this.props.menuState}>
-                                <Link to={`/`}>Barak Brudo <span>Web Developer</span></Link></li>
+                            {/* <Route path='/login/:id' exact={true} component={login} /> */}
+                                <Link to={`/login`}>Login</Link></li> 
                             <li onClick={this.props.menuState}>
-                                <Link to={`/graph`}>Graph</Link></li>
-                            <li onClick={this.props.menuState}>
-                               {/* <Route path='/login/:id' exact={true} component={login} /> */}
-                                <Link to={`/login`}>Login</Link></li>
+                                <Link to={`/userUpdate`}>Update</Link></li>    
                             <li onClick={this.props.menuState}>
                                 <Link to={`/tracksymptoms`}>Tracking Symptoms</Link></li>
                             <li onClick={this.props.menuState}>
                                 <Link to={`/selectState`}>Select State</Link></li>
+                            {/*<li onClick={this.props.menuState}>
+                            <Link to={`/addText`}>Add Text</Link></li>*/}
                             <li onClick={this.props.menuState}>
-                                <Link to={`/addText`}>Add Text</Link></li>
+                                <Link to={`/graph`}>Graph</Link></li>
                         </ul>
                     </div>
                     <div className='wrapper'>
@@ -71,6 +80,7 @@ class Navbar extends React.Component {
                         <Route exact={true} path='/tracksymptoms' component={Symptoms} />
                         <Route exact={true} path='/selectState' component={SelectState} />
                         <Route exact={true} path='/addText' component={addText} />
+                        <Route exact={true} path='/userUpdate' component={UserUpdateForm} />
                         <Route path='/pages/:id' component={Page} />
                         <Route exact={true} path='/graph' component={Graph} />  
                         <Route exact={true} path='/graph/:id' component={Graph} /> 

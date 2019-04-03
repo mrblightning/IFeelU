@@ -17,6 +17,7 @@ class Symptoms extends React.Component {
             Exhaustion: false,
             redirectBack: false,
             redirectNext: false,
+            redirectLogin: false,
             UserId: ""
         }
         this.renderRedirect = this.renderRedirect.bind(this);
@@ -32,6 +33,7 @@ class Symptoms extends React.Component {
         this.switchDizzinessHandler = this.switchDizzinessHandler.bind(this);
         this.switchExhaustionHandler = this.switchExhaustionHandler.bind(this);
         this.UpdateTracking = this.UpdateTracking.bind(this);
+        this.sleep = this.sleep.bind(this);
     }
 
     renderRedirect() {
@@ -42,6 +44,10 @@ class Symptoms extends React.Component {
         if (this.state.redirectNext) {
             console.log("renderRedirect Next");
             return <Redirect method="post" to={"/selectState"}></Redirect>
+        }
+        if (this.state.redirectLogin) {
+            console.log("renderRedirect Login");
+            return <Redirect method="post" to={"/login"}></Redirect>
         }
     }
 
@@ -54,7 +60,7 @@ class Symptoms extends React.Component {
 
     //this function is for getting user data from server for an existing user in sessionStorage
     async getStoredUser(id) {
-        console.log("getStoredUser");
+        console.log("getStoredUser for " + id);
         await fetch('http://localhost:4000/fetch', {
         //await fetch('fetch', {    
             method: "post",
@@ -81,11 +87,24 @@ class Symptoms extends React.Component {
                     Exhaustion: data.TrackingExhaustion,
                     UserId: data._id
                 });
-                console.log("Symptoms - got data from session: " + data.TrackingGeneralFeeling);
+                console.log("Symptoms - got data from session for UserId: " + data._id);
+            } else {
+                console.log("data returned from fetch undefined");
             }
         }).catch(Error => {
             console.log("Error with _ID from session: " + Error)
         })
+    }
+
+    //I've defined this function to create a forced delay after the UpdateTracking
+    //I've found that even though the record is updated it takes time for that update to "register" in the following page
+    sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+          if ((new Date().getTime() - start) > milliseconds){
+            break;
+          }
+        }
     }
 
     //this function is for setting the symptom tracking variables for the user in the DB
@@ -119,11 +138,13 @@ class Symptoms extends React.Component {
                 Pain: this.state.Pain,
                 Dizziness: this.state.Dizziness,
                 Exhaustion: this.state.Exhaustion
-            }),
-            success: (res) => {
-                console.log(res);
-                console.log("this is a UpdateTracking success");
-            }
+            })
+        }).then(response => {
+            console.log("UpdateTracking: " + response.statusText);
+            //this.setState({ redirectNext: true });
+            this.sleep(500);
+        }).catch(Error => {
+            console.log("Error with _ID from session: " + Error)
         })
     }
 
@@ -134,12 +155,13 @@ class Symptoms extends React.Component {
         console.dir(userFromSession);
         //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
         if (userFromSession != null) {
-            console.log("there is a user saved in this session");
+            console.log("there is a user saved in this session: " + userFromSession);
             this.setState({ UserId: userFromSession });
             this.getStoredUser(userFromSession);
         }
         //if I do not have sessionStorage then I redirect to the login page
         else {
+            this.setState({ redirectLogin: true });
             console.log("there is a NO user saved in this session");
         }
     }

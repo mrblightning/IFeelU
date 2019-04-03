@@ -34,7 +34,8 @@ class RadioContainer extends React.Component {
       treatments: '',
       //these variables are used in the redirection assosiated with the buttons at thye bottom of the page
       redirectBack: false,
-      redirectNext: false
+      redirectNext: false,
+      redirectLogin: false
     }
     this.renderRedirect = this.renderRedirect.bind(this);
     this.setRedirect = this.setRedirect.bind(this);
@@ -168,6 +169,7 @@ class RadioContainer extends React.Component {
     }
     //if I do not have sessionStorage then I redirect to the login page
     else {
+      this.setState({ redirectLogin: true });
       console.log("there is a NO user saved in this session");
     }
   }
@@ -216,7 +218,6 @@ class RadioContainer extends React.Component {
     })
   }
 
-
   BackHandler() {
     this.setState({ redirectBack: true });
   }
@@ -241,6 +242,10 @@ class RadioContainer extends React.Component {
     if (this.state.redirectNext) {
       console.log("renderRedirect Next");
       return <Redirect method="post" to={"/addText"}></Redirect>
+    }
+    if (this.state.redirectLogin) {
+      console.log("renderRedirect Login");
+      return <Redirect method="post" to={"/login"}></Redirect>
     }
   }
 
