@@ -210,11 +210,17 @@ class RadioContainer extends React.Component {
         currentTime: this.state.currentTime,
         conditions: this.state.conditions, 
         treatments: this.state.treatments
-      }),
-      success: (res) => {
-        console.log(res);
-        console.log("this is a WriteRecord success");
-      }
+      })
+      // ,
+      // success: (res) => {
+      //   console.log(res);
+      //   console.log("this is a WriteRecord success");
+      // }
+    }).then(response => {
+      console.log("WriteRecord success: " + response.statusText);
+      //this.setState({ redirectNext: true });
+    }).catch(Error => {
+      console.log("Error with _ID from session: " + Error)
     })
   }
 

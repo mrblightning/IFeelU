@@ -16,7 +16,7 @@ import SelectState from '../Pages/page.selectState';
 /*addText is where I add the extra text for each of the states you follow */
 import addText from '../Pages/page.addText';
 /*RegistrationForm is where we register a new user */
-//import RegistrationForm from '../Pages/page.registration';
+import RegistrationForm from '../Pages/page.registration';
 /*UserUpdateForm is where we update details for an existing user */
 import UserUpdateForm from '../Pages/page.userUpdate';
 
@@ -77,6 +77,7 @@ class Navbar extends React.Component {
                         {/*<Route> changes the content of this div (wrapper) based onb the URL*/}
                         <Route exact={true} path='/' component={login} />
                         <Route exact={true} path='/login' component={login} />
+                        <Route exact={true} path='/registration' component={RegistrationForm} />
                         <Route exact={true} path='/tracksymptoms' component={Symptoms} />
                         <Route exact={true} path='/selectState' component={SelectState} />
                         <Route exact={true} path='/addText' component={addText} />

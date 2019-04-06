@@ -142,7 +142,7 @@ class Symptoms extends React.Component {
         }).then(response => {
             console.log("UpdateTracking: " + response.statusText);
             //this.setState({ redirectNext: true });
-            this.sleep(500);
+            //this.sleep(500);
         }).catch(Error => {
             console.log("Error with _ID from session: " + Error)
         })
@@ -170,41 +170,81 @@ class Symptoms extends React.Component {
     switchGeneralFeelingHandler() {
         this.setState({ GeneralFeeling: !this.state.GeneralFeeling });
         console.log("GeneralFeeling: " + this.state.GeneralFeeling);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchAppetiteHandler() {
         this.setState({ Appetite: !this.state.Appetite });
         console.log("Appetite: " + this.state.Appetite);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchNauseaHandler() {
         this.setState({ Nausea: !this.state.Nausea });
         console.log("Nausea: " + this.state.Nausea);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchBowelMovementsHandler() {
         this.setState({ BowelMovements: !this.state.BowelMovements });
         console.log("BowelMovements: " + this.state.BowelMovements);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchMotivationHandler() {
         this.setState({ Motivation: !this.state.Motivation });
         console.log("Motivation: " + this.state.Motivation);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchPainHandler() {
         this.setState({ Pain: !this.state.Pain });
         console.log("Pain: " + this.state.Pain);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchDizzinessHandler() {
         this.setState({ Dizziness: !this.state.Dizziness });
         console.log("Dizziness: " + this.state.Dizziness);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     switchExhaustionHandler() {
         this.setState({ Exhaustion: !this.state.Exhaustion });
         console.log("Exhaustion: " + this.state.Exhaustion);
+        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        if (userFromSession != null) {
+            this.setState({ UserId: userFromSession });
+            this.UpdateTracking(userFromSession);
+        }
     }
 
     BackHandler() {
@@ -212,14 +252,18 @@ class Symptoms extends React.Component {
     }
 
     NextHandler() {
-        console.log(this.GeneralFeeling + " " + this.Appetite);
-        let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
-        console.dir(userFromSession);
-        //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
-        if (userFromSession != null) {
-            this.setState({ UserId: userFromSession });
-            this.UpdateTracking(userFromSession);
-        }
+        //Used to be that I handeled the change in symptoms only when the 'next' button was pressed
+        //Tal (My teacher) recomended I update the user EVERY TIME A TOGGLE IS SWITCHED
+        //without waiting for the button. I moved the UpdateTracking call to each of the toggle functions
+
+        // console.log(this.GeneralFeeling + " " + this.Appetite);
+        // let userFromSession = JSON.parse(window.sessionStorage.getItem('id'));
+        // console.dir(userFromSession);
+        // //If I have a valid sessionStorage then I retrive the user data using the getStoredUser function 
+        // if (userFromSession != null) {
+        //     this.setState({ UserId: userFromSession });
+        //     this.UpdateTracking(userFromSession);
+        // }
         this.setState({ redirectNext: true });
     }
 

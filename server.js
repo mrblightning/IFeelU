@@ -263,7 +263,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -295,7 +295,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -327,7 +327,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -359,7 +359,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -391,7 +391,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -423,7 +423,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -455,7 +455,7 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
@@ -487,11 +487,13 @@ app.put("/set", (req, res) => {
         console.log(
           "1 document at UserId " + UserId1 + " inserted " + result.insertedCount
         );
-        res.send(UserId1);
+        //res.send(UserId1);
         db.close();
       });
     });
   }
+  // no matter what we send some sort of result back to the client
+  res.send(UserId1);
 });
 
 //PUT call from client to server - update text in user records

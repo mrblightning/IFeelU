@@ -73,6 +73,7 @@ class TextContainer extends React.Component {
           TrackExhaustion: data.TrackingExhaustion,
           UserId: data._id,
         });
+        console.log("got data from session: " + data._id);
       }
     }).catch(Error => {
       console.log("Error with _ID from session: " + Error)
@@ -158,11 +159,17 @@ class TextContainer extends React.Component {
         PainText: this.state.PainText,
         DizzinessText: this.state.DizzinessText,
         ExhaustionText: this.state.ExhaustionText,
-      }),
-      success: (res) => {
-        console.log(res);
-        console.log("this is a WriteRecord success");
-      }
+      })
+      // ,
+      // success: (res) => {
+      //   console.log(res);
+      //   console.log("this is a WriteRecord success");
+      // }
+    }).then(response => {
+      console.log("WriteRecord success: " + response.statusText);
+      //this.setState({ redirectNext: true });
+    }).catch(Error => {
+      console.log("Error with _ID from session: " + Error)
     })
   }
 
