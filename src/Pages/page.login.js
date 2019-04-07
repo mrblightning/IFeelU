@@ -103,8 +103,8 @@ class Login extends React.Component {
     async loginHandler(SentUserName, SentPassword){
         console.log("loginHandler");
         console.log(SentUserName);
-        //await fetch('http://localhost:4000/fetch', {
-        await fetch('fetch', {       
+        await fetch('http://localhost:4000/fetch', {
+        //await fetch('fetch', {       
             method: "post",
             headers: {
                 'Accept': 'application/json',
